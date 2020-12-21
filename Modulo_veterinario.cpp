@@ -73,7 +73,7 @@ main()
 	
 	FILE *vet;
 	
-	vet=fopen("veterinaria.dat","a+b");
+	//vet=fopen("veterinaria.dat","a+b");
 	
 	
 	do
@@ -128,7 +128,7 @@ void identificacion(FILE *vet,usuarios veterinaria)
 	bool b = false;
 	char aux_user[10],aux_password[32],aux_apeynom[60];
 	
-	vet=fopen("veterinaria.dat","r+b");
+	vet=fopen("Usuarios.dat","r+b");
 	
 	system("CLS");
 	
