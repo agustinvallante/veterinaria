@@ -3,6 +3,16 @@
 #include <string.h>
 #include <windows.h>
 
+struct veterinario
+{
+	char apeynom[60];
+	int matricula; 
+	char contrasenia[10]; 
+	int dni;
+	char telefono[25];
+		
+};
+
 struct fecha
 {
 	int dia,mes,anio;
@@ -40,6 +50,7 @@ struct usuarios
 	user veter;
 	mascota masc;
 	turnos tur;
+	veterinario vete;
 };
 
 void iniciar_sesion(FILE *vet,usuarios veterinaria);
@@ -56,7 +67,8 @@ main()
 	int opc;
 	do
 	    {
-	        system("cls");        
+	        system("cls");      
+			system("COLOR 0E");  
 			printf("\n\t\t\t\tModulo del asistente");
     	    printf("\n\t\t\t\t==============================");
     		printf("\n\t\t\t\t1.- Iniciar Sesi%cn",162);
@@ -192,7 +204,7 @@ void iniciar_sesion(FILE *vet,usuarios veterinaria)
 	fread(&veterinaria,sizeof(usuarios),1,vet);
 	while(!feof(vet))
 	{
-	
+		
 		if((strcmp(veterinaria.asistente.username,aux_user) == 0)	&& (strcmp(veterinaria.asistente.password,aux_password) == 0))
 		{
 			b = true;
@@ -213,6 +225,7 @@ void iniciar_sesion(FILE *vet,usuarios veterinaria)
 	{
 		printf("ERROR, Nombre de usuario y contraseña no coinciden");
 	}
+	system("pause");
 	fclose(vet);
 }
 
