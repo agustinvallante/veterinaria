@@ -59,7 +59,7 @@ struct usuarios
 	user veter;
 	mascota masc;
 	turnos tur;
-	veterinario vet;
+	veterinario vete;
 };
 
 void identificacion(FILE *vet,usuarios veterinaria);
@@ -146,7 +146,8 @@ void identificacion(FILE *vet,usuarios veterinaria)
 	printf("*Para Iniciar Sesi%cn debe ingresar los siguientes datos*\n",162);
 	printf("*");
 	printf("*******************************************************\n");
-
+	
+	_flushall();
 	printf("\n\t\tNombre de Usuario -->  ");
 	gets(aux_user);
 
@@ -179,7 +180,7 @@ void identificacion(FILE *vet,usuarios veterinaria)
 	{
 		printf("ERROR, Nombre de usuario y contrase%ca no coinciden",164);
 	}
-		
+	system("pause");
 	fclose(vet);
 }
 
@@ -189,34 +190,42 @@ void llamarmascota(FILE *vet,usuarios veterinaria)
 	char aux_apeynom[60];
 	
 	vet=fopen("Mascotas.dat","r+b");
-
-	system("CLS");
 	
-	printf("\nLISTADO DE MASCOTAS\n");
-	fread(&veterinaria,sizeof(usuarios),1,vet);
-	while(!feof(vet))
+	if(vet == NULL)
 	{
-		_flushall();
-		puts(veterinaria.masc.apeynom);
+		system("cls");
+		printf("ERROR, no hay ninguna mascota registrada");
+	}
+	else
+	{
+		system("CLS");
+		
+		printf("\nLISTADO DE MASCOTAS\n");
+		fread(&veterinaria,sizeof(usuarios),1,vet);
+		while(!feof(vet))
+		{
+			_flushall();
+			puts(veterinaria.masc.apeynom);
+			
+			fread(&veterinaria,sizeof(usuarios),1,vet);
+			
+		}
+		system("PAUSE");
+		rewind(vet);
+		printf("\nIngrese un nombre a llamar: ");		gets(aux_apeynom);
 		
 		fread(&veterinaria,sizeof(usuarios),1,vet);
-		
-	}
-	system("PAUSE");
-	rewind(vet);
-	printf("\nIngrese un nombre a llamar: ");		gets(aux_apeynom);
-	fread(&veterinaria,sizeof(usuarios),1,vet);
-
-	while(!feof(vet))
-	{
-		if(strcmp(veterinaria.masc.apeynom,aux_apeynom) == 0)
+		while(!feof(vet))
 		{
-			printf("\nApellido y nombre: ");		puts(veterinaria.masc.apeynom);
-			printf("\nDNI del due%co: %d",164,veterinaria.masc.DNI_duenio);
-			printf("\nLocalidad: ");				puts(veterinaria.masc.localidad);
-			printf("\nEdad: %d a%cos",2020-veterinaria.masc.nacimiento.anio,164);
-			printf("\nPeso: %dkg",veterinaria.masc.peso);
-			fread(&veterinaria,sizeof(usuarios),1,vet);
+			if(strcmp(veterinaria.masc.apeynom,aux_apeynom) == 0)
+			{
+				printf("\nApellido y nombre: ");		puts(veterinaria.masc.apeynom);
+				printf("\nDNI del due%co: %d",164,veterinaria.masc.DNI_duenio);
+				printf("\nLocalidad: ");				puts(veterinaria.masc.localidad);
+				printf("\nEdad: %d a%cos",veterinaria.masc.nacimiento.anio,164);
+				printf("\nPeso: %dkg",veterinaria.masc.peso);
+				fread(&veterinaria,sizeof(usuarios),1,vet);
+			}
 		}
 	}
 	
