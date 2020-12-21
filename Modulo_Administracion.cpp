@@ -31,7 +31,6 @@ struct fecha
 	int dia,mes,anio;	
 };
 
-
 struct mascota 
 {
 	char apeynom[60];
@@ -66,7 +65,7 @@ struct usuarios
 	user veter;
 	mascota masc;
 	turnos tur;
-	veterinario vet;
+	veterinario vete;
 };
 
 void reg_veterinario(FILE *vet,usuarios veterinaria);
@@ -213,24 +212,32 @@ void atencionVet(FILE *vet,usuarios veterinaria)		//Atenciones por veterinario
 {
 	vet = fopen("Turnos.dat","r+b");
 	
-	system("cls");
-	printf("\t\tListado de turnos\n");
-	printf("\t\t~~~~~~~~~~~~~~~~~\n");
-	printf("\tFecha\t\t\t\tVeterinario\n");
-	fread(&veterinaria,sizeof(usuarios),1,vet);
-	while(!feof(vet))
+	if(vet == NULL)
 	{
-		printf("\t%d/%d/%d\t\t\t\t%d\n",veterinaria.tur.turno.dia,veterinaria.tur.turno.mes,veterinaria.tur.turno.anio,veterinaria.tur.matricula);
+		system("cls");
+
+		printf("\nERROR, no hay atenciones registradas\n");
+	}
+	else
+	{
+		system("cls");
+		printf("\t\tListado de turnos\n");
+		printf("\t\t~~~~~~~~~~~~~~~~~\n");
+		printf("\tFecha\t\t\t\tVeterinario\n");
 		fread(&veterinaria,sizeof(usuarios),1,vet);
+		while(!feof(vet))
+		{
+			printf("\t%d/%d/%d\t\t\t\t%d\n",veterinaria.tur.turno.dia,veterinaria.tur.turno.mes,veterinaria.tur.turno.anio,veterinaria.tur.matricula);
+			fread(&veterinaria,sizeof(usuarios),1,vet);
+		}	
 	}
 	
 	fclose(vet);
-
 }
 
 void reg_asistente(FILE *vet,usuarios veterinaria) //realiza el registro de usuario asistente
 {
-	vet = fopen("veterinaria.dat","w+b");
+	vet = fopen("Usuarios.dat","w+b");
 	int leng_user,leng_password,b = 0,x,p,c,cant_dig;
 	int b_p = 0,an_contr,k,b_1;
 	char aux_user[10],aux_pass[32];
@@ -506,7 +513,7 @@ int an_contra(int leng_password, char aux_pass[32], int &k,int &b_1) //analiza l
 
 void reg_veterinario(FILE *vet,usuarios veterinaria)	//registra al usuario veterinario
 {
-	vet = fopen("veterinaria.dat","w+b");
+	vet = fopen("Usuarios.dat","w+b");
 	int leng_user,leng_password,b = 0,x,p,c,cant_dig;
 	int b_p = 0,an_contr,k,b_1;
 	char aux_user[10],aux_pass[32];
